@@ -26,7 +26,7 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     repo=`git -C exampleSite/themes/$x remote -v | head -n 1 | awk '{print$2}'`
     echo "source = \"$repo\"" >> themeSite/content/$x.md
     cat exampleSite/themes/$x/theme.toml >> themeSite/content/$x.md
-    echo "+++\n" >> themeSite/content/$x.md
+    echo -en "+++\n" >> themeSite/content/$x.md
 
     cat exampleSite/themes/$x/README.md >> themeSite/content/$x.md
 
@@ -34,8 +34,8 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     cp exampleSite/themes/$x/images/tn.png themeSite/static/images/$x.tn.png
 done
 
-echo "**********************************************************************\n"
-echo "\n"
-echo "to view the site locally run 'hugo server -s hugoThemeSite/themeSite'\n"
-echo "\n"
-echo "**********************************************************************\n"
+echo -en "**********************************************************************\n"
+echo -en "\n"
+echo -en "to view the site locally run 'hugo server -s hugoThemeSite/themeSite'\n"
+echo -en "\n"
+echo -en "**********************************************************************\n"
