@@ -15,9 +15,16 @@ cd ..
 mkdir -p themeSite/content
 mkdir -p themeSite/static/images
 
+if [ $# -eq 1 ]; then
+    BASEURL="$1"
+else
+    BASURL="http://themes.gohugo.io"
+fi
+
+
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
-    echo hugo -s exampleSite -d ../themeSite/static/theme/$x/ -t $x -b http://themes.gohugo.io/theme/$x/
-    hugo -s exampleSite -d ../themeSite/static/theme/$x/ -t $x -b http://themes.gohugo.io/theme/$x/
+    echo hugo -s exampleSite -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
+    hugo -s exampleSite -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
 
     echo "+++" > themeSite/content/$x.md
     echo "screenshot = \"/images/$x.screenshot.png\"" >> themeSite/content/$x.md
