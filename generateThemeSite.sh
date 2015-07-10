@@ -62,7 +62,8 @@ else
 fi
 
 # heather-hugo: invalid theme.toml, https://github.com/hbpasti/heather-hugo/pull/3
-blacklist=('heather-hugo')
+# persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
+blacklist=('heather-hugo','persona')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	blacklisted=`echo ${blacklist[*]} | grep "$x"`
