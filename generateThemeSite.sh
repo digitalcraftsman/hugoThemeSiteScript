@@ -11,6 +11,9 @@ function try {
     fi
 }
 
+configTplPrefix="config-tpl"
+configBase="${configTplPrefix}-base"
+configBaseParams="${configTplPrefix}-params"
 
 # This is the hugo Theme Site Builder
 mkdir -p hugoThemeSite
@@ -66,8 +69,25 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	if [ "${blacklisted}" != "" ]; then
 		continue
 	fi
-    echo hugo -s exampleSite --config=themeSite/templates/config-tpl.toml -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
-    try hugo -s exampleSite --config=themeSite/templates/config-tpl.toml -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
+	
+	themeConfig="${TMPDIR}config-${x}.toml"
+	baseConfig="${configBase}.toml"
+	paramsConfig="${configBaseParams}.toml"
+	
+	
+	if [ -f "themeSite/templates/${configBase}-${x}.toml" ]; then
+		baseConfig="${configBase}-${x}.toml"		
+	fi
+	
+	if [ -f "themeSite/templates/${configBaseParams}-${x}.toml" ]; then
+		paramsConfig="${configBaseParams}-${x}.toml"		
+	fi
+	
+	cat themeSite/templates/${baseConfig} > ${themeConfig}
+	cat themeSite/templates/${paramsConfig} >> ${themeConfig}
+	
+    echo "Building site for theme ${x} using config ${themeConfig}"
+    try hugo -s exampleSite --config=${themeConfig} -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
 
     echo "+++" > themeSite/content/$x.md
     echo "screenshot = \"/images/$x.screenshot.png\"" >> themeSite/content/$x.md
