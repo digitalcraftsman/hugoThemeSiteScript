@@ -1,5 +1,17 @@
 #!/bin/bash
 
+function try {
+    "$@"
+    code=$?
+    if [ $code -ne 0 ]
+    then
+        echo "$1 failed: exit status $code"
+		# Uncomment below to fail fast
+       # exit 1 
+    fi
+}
+
+
 # This is the hugo Theme Site Builder
 mkdir -p hugoThemeSite
 cd hugoThemeSite
@@ -11,6 +23,11 @@ git clone https://github.com/spf13/HugoBasicExample.git exampleSite
 cd exampleSite
 git clone --recursive https://github.com/spf13/hugoThemes.git themes
 cd ..
+
+# cleanup
+try rm -rf themeSite/static/theme
+try rm -rf themeSite/static/content
+try rm -rf themeSite/static/images
 
 mkdir -p themeSite/content
 mkdir -p themeSite/static/images
@@ -29,8 +46,8 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	if [ "${blacklisted}" != "" ]; then
 		continue
 	fi
-    echo hugo -s exampleSite -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
-    hugo -s exampleSite -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
+    echo hugo -s exampleSite --config=themeSite/templates/config-tpl.toml -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
+    try hugo -s exampleSite --config=themeSite/templates/config-tpl.toml -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
 
     echo "+++" > themeSite/content/$x.md
     echo "screenshot = \"/images/$x.screenshot.png\"" >> themeSite/content/$x.md
@@ -44,8 +61,10 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     cat exampleSite/themes/$x/README.md >> themeSite/content/$x.md
 
     cp exampleSite/themes/$x/images/screenshot.png themeSite/static/images/$x.screenshot.png
-    cp exampleSite/themes/$x/images/tn.png themeSite/static/images/$x.tn.png
+    cp exampleSite/themes/$x/images/tn.png themeSite/static/images/$x.tn.png	
+  
 done
+
 
 echo -en "**********************************************************************\n"
 echo -en "\n"
