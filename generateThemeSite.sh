@@ -16,15 +16,35 @@ function try {
 mkdir -p hugoThemeSite
 cd hugoThemeSite
 
-#hugo new site themes
+if [ -d themeSite ]; then
+	cd themeSite
+	git pull --rebase
+	cd ..
+else
+	git clone https://github.com/spf13/HugoThemesSite.git themeSite  
+fi
+if [ -d exampleSite ]; then
+	cd exampleSite
+	git pull --rebase
+	cd ..
+else
+	git clone https://github.com/spf13/HugoBasicExample.git exampleSite
+fi
 
-git clone https://github.com/spf13/HugoThemesSite.git themeSite
-git clone https://github.com/spf13/HugoBasicExample.git exampleSite
 cd exampleSite
-git clone --recursive https://github.com/spf13/hugoThemes.git themes
+
+if [ -d themes ]; then
+	cd themes
+	git pull --rebase
+	git submodule update --init --recursive
+	cd ..
+else
+	git clone --recursive https://github.com/spf13/hugoThemes.git themes
+fi
+
 cd ..
 
-# cleanup
+# clean before new build
 try rm -rf themeSite/static/theme
 try rm -rf themeSite/static/content
 try rm -rf themeSite/static/images
