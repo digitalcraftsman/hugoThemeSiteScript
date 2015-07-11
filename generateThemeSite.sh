@@ -64,9 +64,8 @@ else
     BASURL="http://themes.gohugo.io"
 fi
 
-# heather-hugo: invalid theme.toml, https://gith/ub.com/hbpasti/heather-hugo/pull/3
 # persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
-blacklist=('heather-hugo','persona')
+blacklist=('persona')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	blacklisted=`echo ${blacklist[*]} | grep "$x"`
