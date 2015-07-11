@@ -11,6 +11,9 @@ function try {
     fi
 }
 
+
+siteDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hugoThemeSite"
+
 configTplPrefix="config-tpl"
 configBase="${configTplPrefix}-base"
 configBaseParams="${configTplPrefix}-params"
@@ -61,13 +64,38 @@ else
     BASURL="http://themes.gohugo.io"
 fi
 
-# heather-hugo: invalid theme.toml, https://github.com/hbpasti/heather-hugo/pull/3
+# heather-hugo: invalid theme.toml, https://gith/ub.com/hbpasti/heather-hugo/pull/3
 # persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
 blacklist=('heather-hugo','persona')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	blacklisted=`echo ${blacklist[*]} | grep "$x"`
 	if [ "${blacklisted}" != "" ]; then
+		continue
+	fi
+	
+    cp exampleSite/themes/$x/images/screenshot.png themeSite/static/images/$x.screenshot.png
+    cp exampleSite/themes/$x/images/tn.png themeSite/static/images/$x.tn.png
+	
+    echo "+++" > themeSite/content/$x.md
+    echo "screenshot = \"/images/$x.screenshot.png\"" >> themeSite/content/$x.md
+    echo "thumbnail = \"/images/$x.tn.png\"" >> themeSite/content/$x.md
+    echo "demo = \"/theme/$x/\"" >> themeSite/content/$x.md
+    repo=`git -C exampleSite/themes/$x remote -v | head -n 1 | awk '{print$2}'`
+    echo "source = \"$repo\"" >> themeSite/content/$x.md
+    cat exampleSite/themes/$x/theme.toml >> themeSite/content/$x.md
+    echo -en "+++\n" >> themeSite/content/$x.md
+
+    cat exampleSite/themes/$x/README.md >> themeSite/content/$x.md
+	
+	if [ -d "exampleSite/themes/$x/exampleSite" ]; then
+		# Use content and config in exampleSite
+	    echo "Building site for theme ${x} using its own exampleSite"
+		
+		rm ${siteDir}/exampleSite2
+		ln -s ${siteDir}/exampleSite/themes/$x/exampleSite ${siteDir}/exampleSite2
+		ln -s ${siteDir}/exampleSite/themes ${siteDir}/exampleSite2/themes  
+	    try hugo -s exampleSite2 -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
 		continue
 	fi
 	
@@ -90,19 +118,7 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     echo "Building site for theme ${x} using config ${themeConfig}"
     try hugo -s exampleSite --config=${themeConfig} -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
 
-    echo "+++" > themeSite/content/$x.md
-    echo "screenshot = \"/images/$x.screenshot.png\"" >> themeSite/content/$x.md
-    echo "thumbnail = \"/images/$x.tn.png\"" >> themeSite/content/$x.md
-    echo "demo = \"/theme/$x/\"" >> themeSite/content/$x.md
-    repo=`git -C exampleSite/themes/$x remote -v | head -n 1 | awk '{print$2}'`
-    echo "source = \"$repo\"" >> themeSite/content/$x.md
-    cat exampleSite/themes/$x/theme.toml >> themeSite/content/$x.md
-    echo -en "+++\n" >> themeSite/content/$x.md
-
-    cat exampleSite/themes/$x/README.md >> themeSite/content/$x.md
-
-    cp exampleSite/themes/$x/images/screenshot.png themeSite/static/images/$x.screenshot.png
-    cp exampleSite/themes/$x/images/tn.png themeSite/static/images/$x.tn.png	
+    	
   
 done
 
