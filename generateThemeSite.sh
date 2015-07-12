@@ -51,6 +51,7 @@ fi
 cd ..
 
 # clean before new build
+try rm -rf themeSite/public
 try rm -rf themeSite/static/theme
 try rm -rf themeSite/static/content
 try rm -rf themeSite/static/images
@@ -98,7 +99,7 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 		rm ${siteDir}/exampleSite2
 	
 		continue
-	fi
+	fi	
 	
 	themeConfig="${TMPDIR}config-${x}.toml"
 	baseConfig="${configBase}.toml"
