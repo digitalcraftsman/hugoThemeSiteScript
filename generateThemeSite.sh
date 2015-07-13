@@ -11,7 +11,7 @@ function try {
     fi
 }
 
-
+GLOBIGNORE=.*
 siteDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hugoThemeSite"
 
 configTplPrefix="config-tpl"
@@ -53,7 +53,7 @@ cd ..
 # clean before new build
 try rm -rf themeSite/public
 try rm -rf themeSite/static/theme
-try rm -rf themeSite/static/content
+try rm -rf themeSite/content
 try rm -rf themeSite/static/images
 
 mkdir -p themeSite/content
@@ -120,9 +120,9 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     echo "Building site for theme ${x} using config ${themeConfig}"
     try hugo -s exampleSite --config=${themeConfig} -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
 
-    	
-  
 done
+
+unset GLOBIGNORE
 
 
 echo -en "**********************************************************************\n"
