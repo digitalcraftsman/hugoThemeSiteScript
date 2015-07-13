@@ -66,7 +66,8 @@ else
 fi
 
 # persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
-blacklist=('persona')
+# html5: https://github.com/simonmika/hugo-theme-html5/issues/2
+blacklist=('persona', 'html5')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	blacklisted=`echo ${blacklist[*]} | grep "$x"`
