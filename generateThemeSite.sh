@@ -69,10 +69,20 @@ fi
 # html5: https://github.com/simonmika/hugo-theme-html5/issues/2
 blacklist=('persona', 'html5')
 
+# hugo-incorporated: too complicated, needs its own exampleSite: TODO(bep): create an issue on their site.
+noDemo=('hugo-incorporated')
+
+
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	blacklisted=`echo ${blacklist[*]} | grep "$x"`
 	if [ "${blacklisted}" != "" ]; then
 		continue
+	fi
+	
+	generateDemo=true
+	inNoDemo=`echo ${noDemo[*]} | grep "$x"`
+	if [ "${inNoDemo}" != "" ]; then
+		generateDemo=false
 	fi
 	
     cp exampleSite/themes/$x/images/screenshot.png themeSite/static/images/$x.screenshot.png
@@ -81,13 +91,17 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     echo "+++" > themeSite/content/$x.md
     echo "screenshot = \"/images/$x.screenshot.png\"" >> themeSite/content/$x.md
     echo "thumbnail = \"/images/$x.tn.png\"" >> themeSite/content/$x.md
-    echo "demo = \"/theme/$x/\"" >> themeSite/content/$x.md
+	if $generateDemo; then
+	    echo "demo = \"/theme/$x/\"" >> themeSite/content/$x.md
+	fi
     repo=`git -C exampleSite/themes/$x remote -v | head -n 1 | awk '{print$2}'`
     echo "source = \"$repo\"" >> themeSite/content/$x.md
     cat exampleSite/themes/$x/theme.toml >> themeSite/content/$x.md
     echo -en "+++\n" >> themeSite/content/$x.md
 
     cat exampleSite/themes/$x/README.md >> themeSite/content/$x.md
+	
+	
 	
 	if [ -d "exampleSite/themes/$x/exampleSite" ]; then
 		# Use content and config in exampleSite
@@ -101,6 +115,10 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	
 		continue
 	fi	
+	
+	if ! $generateDemo; then
+		continue
+	fi
 	
 	themeConfig="${TMPDIR}config-${x}.toml"
 	baseConfig="${configBase}.toml"
