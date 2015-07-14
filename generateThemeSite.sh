@@ -13,7 +13,11 @@ function try {
 
 function fixReadme {
 	local content=$(cat $1)
-	content=$( echo "$content" | perl -p -e 's/github\.com\/(.*?)\/blob\/master\/images/raw\.githubusercontent\.com\/$1\/master\/images/g;' )	
+	content=$( echo "$content" | perl -p -e 's/github\.com\/(.*?)\/blob\/master\/images/raw\.githubusercontent\.com\/$1\/master\/images/g;' )
+	# comment out shortcode samples
+	content=$( echo "$content" | perl -p -e 's/{{%(.*?)%}}/{{%\/*$1*\/%}}/g;' )
+	content=$( echo "$content" | perl -p -e 's/{{<(.*?)>}}/{{<\/*$1*\/>}}/g;' )
+		
 	echo "$content"
 }
 
