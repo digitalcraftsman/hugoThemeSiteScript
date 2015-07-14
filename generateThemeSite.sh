@@ -11,6 +11,12 @@ function try {
     fi
 }
 
+function fixReadme {
+	local content=$(cat $1)
+	content=$( echo "$content" | perl -p -e 's/github\.com\/(.*?)\/blob\/master\/images/raw\.githubusercontent\.com\/$1\/master\/images/g;' )	
+	echo "$content"
+}
+
 GLOBIGNORE=.*
 siteDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hugoThemeSite"
 
@@ -99,7 +105,7 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     cat exampleSite/themes/$x/theme.toml >> themeSite/content/$x.md
     echo -en "+++\n" >> themeSite/content/$x.md
 
-    cat exampleSite/themes/$x/README.md >> themeSite/content/$x.md
+    fixReadme exampleSite/themes/$x/README.md >> themeSite/content/$x.md
 	
 	
 	
