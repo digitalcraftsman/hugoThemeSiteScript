@@ -69,7 +69,7 @@ fi
 # html5: https://github.com/simonmika/hugo-theme-html5/issues/2
 blacklist=('persona', 'html5')
 
-# hugo-incorporated: too complicated, needs its own exampleSite: TODO(bep): create an issue on their site.
+# hugo-incorporated: too complicated, needs its own exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 noDemo=('hugo-incorporated')
 
 
