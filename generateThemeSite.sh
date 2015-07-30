@@ -6,8 +6,7 @@ function try {
     if [ $code -ne 0 ]
     then
         echo "$1 failed: exit status $code"
-		# Uncomment below to fail fast
-       # exit 1 
+	    exit 1 
     fi
 }
 
@@ -82,7 +81,8 @@ blacklist=('persona', 'html5')
 # hugo-incorporated: too complicated, needs its own exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 # landing-page-hugo: same as above
 # still using deprecated vars (0.14): 'aglaus', 'journal', 'slim' 
-noDemo=('hugo-incorporated', 'aglaus', 'journal', 'slim')
+# next: https://github.com/leopku/hugo-theme-next/issues/2
+noDemo=('hugo-incorporated', 'aglaus', 'journal', 'slim', 'next')
 
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
