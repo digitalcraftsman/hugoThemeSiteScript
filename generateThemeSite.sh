@@ -20,6 +20,15 @@ function fixReadme {
 	echo "$content"
 }
 
+# Load the repositories from the provided environment variables or our defaults
+HUGO_THEME_SITE_REPO=${HUGO_THEME_SITE_REPO:-https://github.com/spf13/HugoThemesSite.git}
+HUGO_BASIC_EXAMPLE_REPO=${HUGO_BASIC_EXAMPLE_REPO:-https://github.com/spf13/HugoBasicExample.git}
+HUGO_THEMES_REPO=${HUGO_THEMES_REPO:-https://github.com/spf13/hugoThemes.git}
+
+echo "Using ${HUGO_THEMES_REPO} for themes"
+echo "Using ${HUGO_THEME_SITE_REPO} for theme site"
+echo "Using ${HUGO_BASIC_EXAMPLE_REPO} for example site"
+
 GLOBIGNORE=.*
 siteDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hugoThemeSite"
 
@@ -36,14 +45,14 @@ if [ -d themeSite ]; then
 	git pull --rebase
 	cd ..
 else
-	git clone https://github.com/spf13/HugoThemesSite.git themeSite  
+	git clone ${HUGO_THEME_SITE_REPO} themeSite  
 fi
 if [ -d exampleSite ]; then
 	cd exampleSite
 	git pull --rebase
 	cd ..
 else
-	git clone https://github.com/spf13/HugoBasicExample.git exampleSite
+	git clone ${HUGO_BASIC_EXAMPLE_REPO} exampleSite
 fi
 
 cd exampleSite
@@ -54,7 +63,7 @@ if [ -d themes ]; then
 	git submodule update --init --recursive
 	cd ..
 else
-	git clone --recursive https://github.com/spf13/hugoThemes.git themes
+	git clone --recursive ${HUGO_THEMES_REPO} themes
 fi
 
 cd ..
