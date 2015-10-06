@@ -118,7 +118,7 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     repo=`git -C exampleSite/themes/$x remote -v | head -n 1 | awk '{print$2}'`
     echo "source = \"$repo\"" >> themeSite/content/$x.md
     cat exampleSite/themes/$x/theme.toml >> themeSite/content/$x.md
-    echo -en "+++\n" >> themeSite/content/$x.md
+    echo -en "\n+++\n\n" >> themeSite/content/$x.md
 
     fixReadme exampleSite/themes/$x/README.md >> themeSite/content/$x.md
 	
