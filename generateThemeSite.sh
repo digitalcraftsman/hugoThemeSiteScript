@@ -6,7 +6,7 @@ function try {
     if [ $code -ne 0 ]
     then
         echo "$1 failed: exit status $code"
-	    exit 1 
+	    exit 1
     fi
 }
 
@@ -45,7 +45,7 @@ if [ -d themeSite ]; then
 	git pull --rebase
 	cd ..
 else
-	git clone ${HUGO_THEME_SITE_REPO} themeSite  
+	git clone ${HUGO_THEME_SITE_REPO} themeSite
 fi
 if [ -d exampleSite ]; then
 	cd exampleSite
@@ -80,7 +80,7 @@ mkdir -p themeSite/static/images
 if [ $# -eq 1 ]; then
     BASEURL="$1"
 else
-    BASURL="http://themes.gohugo.io"
+    BASEURL="http://themes.gohugo.io"
 fi
 
 # persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
@@ -89,7 +89,7 @@ blacklist=('persona', 'html5')
 
 # hugo-incorporated: too complicated, needs its own exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 # landing-page-hugo: same as above
-# still using deprecated vars (0.14): 'aglaus', 'journal', 'slim' 
+# still using deprecated vars (0.14): 'aglaus', 'journal', 'slim'
 # next: https://github.com/leopku/hugo-theme-next/issues/2
 noDemo=('hugo-incorporated', 'aglaus', 'journal', 'slim', 'next')
 
@@ -129,13 +129,13 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
 	    echo "Building site for theme ${x} using its own exampleSite"
 		
 		ln -s ${siteDir}/exampleSite/themes/$x/exampleSite ${siteDir}/exampleSite2
-		ln -s ${siteDir}/exampleSite/themes ${siteDir}/exampleSite2/themes  
-	    try hugo -v -s exampleSite2 -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
+		ln -s ${siteDir}/exampleSite/themes ${siteDir}/exampleSite2/themes
+        try hugo -v -s exampleSite2 -d ../themeSite/static/theme/$x/ -t $x -b $BASEURL/theme/$x/
 		rm ${siteDir}/exampleSite2/themes
 		rm ${siteDir}/exampleSite2
 	
 		continue
-	fi	
+	fi
 	
 	if ! $generateDemo; then
 		continue
