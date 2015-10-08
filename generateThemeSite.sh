@@ -40,31 +40,31 @@ configBaseParams="${configTplPrefix}-params"
 # This is the hugo Theme Site Builder
 mkdir -p hugoThemeSite
 
-pushd hugoThemeSite
+pushd hugoThemeSite > /dev/null
 
 if [ -d themeSite ]; then
-  pushd themeSite
+  pushd themeSite > /dev/null
   git pull --rebase
-  popd
+  popd > /dev/null
 else
   git clone ${HUGO_THEME_SITE_REPO} themeSite
 fi
 
 if [ -d exampleSite ]; then
-  pushd exampleSite
+  pushd exampleSite > /dev/null
   git pull --rebase
-  popd
+  popd > /dev/null
 else
   git clone ${HUGO_BASIC_EXAMPLE_REPO} exampleSite
 fi
 
-pushd exampleSite
+pushd exampleSite > /dev/null
 
 if [ -d themes ]; then
-  pushd themes
+  pushd themes > /dev/null
   git pull --rebase
   git submodule update --init --recursive
-  popd
+  popd > /dev/null
 else
   git clone --recursive ${HUGO_THEMES_REPO} themes
 fi
@@ -94,7 +94,7 @@ blacklist=('persona', 'html5')
 # landing-page-hugo: same as above
 # still using deprecated vars (0.14): 'aglaus', 'journal', 'slim'
 # next: https://github.com/leopku/hugo-theme-next/issues/2
-noDemo=('hugo-incorporated', 'aglaus', 'journal', 'slim', 'next')
+noDemo=('hugo-incorporated', 'aglaus', /'journal', 'slim', 'next')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
   blacklisted=`echo ${blacklist[*]} | grep "$x"`
