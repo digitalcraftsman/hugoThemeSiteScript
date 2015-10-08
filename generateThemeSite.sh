@@ -12,6 +12,7 @@ function try {
 
 function fixReadme {
   local content=$(cat $1)
+  # make image links viewable outside GitHub
   content=$( echo "$content" | perl -p -e 's/github\.com\/(.*?)\/blob\/master\/images/raw\.githubusercontent\.com\/$1\/master\/images/g;' )
   # comment out shortcode samples
   content=$( echo "$content" | perl -p -e 's/{{%(.*?)%}}/{{%\/*$1*\/%}}/g;' )
@@ -38,35 +39,37 @@ configBaseParams="${configTplPrefix}-params"
 
 # This is the hugo Theme Site Builder
 mkdir -p hugoThemeSite
-cd hugoThemeSite
+
+pushd hugoThemeSite
 
 if [ -d themeSite ]; then
-  cd themeSite
+  pushd themeSite
   git pull --rebase
-  cd ..
+  popd
 else
   git clone ${HUGO_THEME_SITE_REPO} themeSite
 fi
+
 if [ -d exampleSite ]; then
-  cd exampleSite
+  pushd exampleSite
   git pull --rebase
-  cd ..
+  popd
 else
   git clone ${HUGO_BASIC_EXAMPLE_REPO} exampleSite
 fi
 
-cd exampleSite
+pushd exampleSite
 
 if [ -d themes ]; then
-  cd themes
+  pushd themes
   git pull --rebase
   git submodule update --init --recursive
-  cd ..
+  popd
 else
   git clone --recursive ${HUGO_THEMES_REPO} themes
 fi
 
-cd ..
+popd
 
 # clean before new build
 try rm -rf themeSite/public
@@ -121,6 +124,10 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
   
   fixReadme exampleSite/themes/$x/README.md >> themeSite/content/$x.md
   
+  if ! $generateDemo; then
+    continue
+  fi
+  
   if [ -d "exampleSite/themes/$x/exampleSite" ]; then
     # Use content and config in exampleSite
     echo "Building site for theme ${x} using its own exampleSite"
@@ -134,14 +141,9 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     continue
   fi
   
-  if ! $generateDemo; then
-    continue
-  fi
-  
   themeConfig="${TMPDIR}config-${x}.toml"
   baseConfig="${configBase}.toml"
   paramsConfig="${configBaseParams}.toml"
-  
   
   if [ -f "themeSite/templates/${configBase}-${x}.toml" ]; then
     baseConfig="${configBase}-${x}.toml"
