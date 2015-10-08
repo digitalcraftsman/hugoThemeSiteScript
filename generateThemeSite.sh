@@ -94,7 +94,7 @@ blacklist=('persona', 'html5')
 # landing-page-hugo: same as above
 # still using deprecated vars (0.14): 'aglaus', 'journal', 'slim'
 # next: https://github.com/leopku/hugo-theme-next/issues/2
-noDemo=('hugo-incorporated', 'aglaus', /'journal', 'slim', 'next')
+noDemo=('hugo-incorporated', 'aglaus', 'journal', 'slim')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
   blacklisted=`echo ${blacklist[*]} | grep "$x"`
