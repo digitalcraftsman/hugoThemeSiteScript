@@ -92,7 +92,8 @@ blacklist=('persona', 'html5')
 
 # hugo-incorporated: too complicated, needs its own exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 # landing-page-hugo: same as above
-# still using deprecated vars (0.14): 'aglaus', 'journal'
+# still using deprecated vars (0.14): 'aglaus'
+# Journal: broken layout: TOD make issue
 # next: https://github.com/leopku/hugo-theme-next/issues/2
 noDemo=('hugo-incorporated', 'aglaus', 'journal')
 
