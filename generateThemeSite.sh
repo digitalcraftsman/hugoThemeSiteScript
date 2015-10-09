@@ -12,13 +12,23 @@ function try {
 
 function fixReadme {
   local content=$(cat $1)
-  # make image links viewable outside GitHub
+  # Make images viewable outside GitHub
   content=$( echo "$content" | perl -p -e 's/github\.com\/(.*?)\/blob\/master\/images/raw\.githubusercontent\.com\/$1\/master\/images/g;' )
-  # comment out shortcode samples
+  # Tell Hugo not to process shortcode samples
   content=$( echo "$content" | perl -p -e 's/{{%(.*?)%}}/{{%\/*$1*\/%}}/g;' )
   content=$( echo "$content" | perl -p -e 's/{{<(.*?)>}}/{{<\/*$1*\/>}}/g;' )
   
   echo "$content"
+}
+
+# Silent pushd
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+# Silent popd
+popd () {
+    command popd "$@" > /dev/null
 }
 
 # Load the repositories from the provided environment variables or our defaults
@@ -40,38 +50,38 @@ configBaseParams="${configTplPrefix}-params"
 # This is the hugo Theme Site Builder
 mkdir -p hugoThemeSite
 
-pushd hugoThemeSite > /dev/null
+pushd hugoThemeSite
 
 if [ -d themeSite ]; then
-  pushd themeSite > /dev/null
+  pushd themeSite
   git pull --rebase
-  popd > /dev/null
+  popd
 else
   git clone ${HUGO_THEME_SITE_REPO} themeSite
 fi
 
 if [ -d exampleSite ]; then
-  pushd exampleSite > /dev/null
+  pushd exampleSite
   git pull --rebase
-  popd > /dev/null
+  popd
 else
   git clone ${HUGO_BASIC_EXAMPLE_REPO} exampleSite
 fi
 
-pushd exampleSite > /dev/null
+pushd exampleSite
 
 if [ -d themes ]; then
-  pushd themes > /dev/null
+  pushd themes
   git pull --rebase
   git submodule update --init --recursive
-  popd > /dev/null
+  popd
 else
   git clone --recursive ${HUGO_THEMES_REPO} themes
 fi
 
 popd
 
-# clean before new build
+# Clean before new build
 try rm -rf themeSite/public
 try rm -rf themeSite/static/theme
 try rm -rf themeSite/content
