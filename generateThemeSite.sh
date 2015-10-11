@@ -98,7 +98,10 @@ fi
 
 # persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
 # html5: https://github.com/simonmika/hugo-theme-html5/issues/2
-blacklist=('persona', 'html5')
+# purehugo: readme (TODO: fix fixReadme)
+# cocoa: missing static folder
+# hugo-mdl: missing static folder: https://github.com/jchatkinson/HugoMDL/pull/6
+blacklist=('persona', 'html5', 'purehugo', 'cocoa', 'hugo-mdl')
 
 # hugo-incorporated: too complicated, needs its own exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 # landing-page-hugo: same as above
@@ -142,6 +145,16 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
   if [ -d "exampleSite/themes/$x/exampleSite" ]; then
     # Use content and config in exampleSite
     echo "Building site for theme ${x} using its own exampleSite"
+	
+	# Hugo should exit with an error code on these ...
+	if [ ! -d "exampleSite/themes/$x/exampleSite/content" ]; then
+		echo "Example site for theme ${x} missing /content folder"
+		exit 1
+	fi
+	if [ ! -d "exampleSite/themes/$x/exampleSite/static" ]; then
+		echo "Example site for theme ${x} missing /static folder"
+		exit 1
+	fi
     
     ln -s ${siteDir}/exampleSite/themes/$x/exampleSite ${siteDir}/exampleSite2
     ln -s ${siteDir}/exampleSite/themes ${siteDir}/exampleSite2/themes
