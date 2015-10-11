@@ -98,10 +98,9 @@ fi
 
 # persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
 # html5: https://github.com/simonmika/hugo-theme-html5/issues/2
-# purehugo: readme (TODO: fix fixReadme)
-# cocoa: missing static folder
+# cocoa: missing static folder, //github.com/nishanths/cocoa-hugo-theme/pull/3
 # hugo-mdl: missing static folder: https://github.com/jchatkinson/HugoMDL/pull/6
-blacklist=('persona', 'html5', 'purehugo', 'cocoa', 'hugo-mdl')
+blacklist=('persona', 'html5', 'cocoa', 'hugo-mdl')
 
 # hugo-incorporated: too complicated, needs its own exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 # landing-page-hugo: same as above
