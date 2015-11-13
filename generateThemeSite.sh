@@ -105,7 +105,7 @@ blacklist=('persona', 'html5')
 # still using deprecated vars (0.14): 'aglaus'
 # Journal: broken layout: TOD make issue
 # next: https://github.com/leopku/hugo-theme-next/issues/2
-# cocoa: bad styling?
+# cocoa: exampleSite isn't neutral (see the about page)
 noDemo=('hugo-incorporated', 'aglaus', 'journal', 'cocoa')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
