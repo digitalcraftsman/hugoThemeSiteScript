@@ -159,7 +159,7 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
     
     ln -s ${siteDir}/exampleSite/themes/$x/exampleSite ${siteDir}/exampleSite2
     ln -s ${siteDir}/exampleSite/themes ${siteDir}/exampleSite2/themes
-    try hugo -v -s exampleSite2 -d ../themeSite/static/theme/$x/  --canonifyURLs=true -t $x -b $BASEURL/theme/$x/
+    try hugo -s exampleSite2 -d ../themeSite/static/theme/$x/  --canonifyURLs=true -t $x -b $BASEURL/theme/$x/
     rm ${siteDir}/exampleSite2/themes
     rm ${siteDir}/exampleSite2
     
