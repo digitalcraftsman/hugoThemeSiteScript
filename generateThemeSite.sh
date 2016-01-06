@@ -100,8 +100,8 @@ fi
 # html5: https://github.com/simonmika/hugo-theme-html5/issues/2
 blacklist=('persona', 'html5', '.git')
 
-# hugo-incorporated: too complicated, needs its own exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
-# landing-page-hugo: same as above
+# hugo-incorporated: too complicated, needs its own
+# exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 # still using deprecated vars (0.14): 'aglaus'
 # Journal: broken layout: TOD make issue
 # next: https://github.com/leopku/hugo-theme-next/issues/2
