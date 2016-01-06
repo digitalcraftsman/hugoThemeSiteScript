@@ -81,11 +81,14 @@ fi
 
 popd
 
+echo "BUILDING FROM" `pwd`
+
 # Clean before new build
 try rm -rf themeSite/public
 try rm -rf themeSite/static/theme
 try rm -rf themeSite/content
 try rm -rf themeSite/static/images
+try rm -rf exampleSite2
 
 mkdir -p themeSite/content
 mkdir -p themeSite/static/images
