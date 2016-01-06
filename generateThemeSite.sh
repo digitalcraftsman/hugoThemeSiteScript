@@ -120,6 +120,8 @@ for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
   if [ "${inNoDemo}" != "" ]; then
     generateDemo=false
   fi
+
+  echo " ==== PROCESSING " $x " ====== "
   
   cp exampleSite/themes/$x/images/screenshot.png themeSite/static/images/$x.screenshot.png
   cp exampleSite/themes/$x/images/tn.png themeSite/static/images/$x.tn.png
