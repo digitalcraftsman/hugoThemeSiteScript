@@ -103,8 +103,7 @@ blacklist=('persona', 'html5', '.git')
 # hugo-incorporated: too complicated, needs its own
 # exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 # still using deprecated vars (0.14): 'aglaus'
-# Journal: broken layout: TOD make issue
-# next: https://github.com/leopku/hugo-theme-next/issues/2
+# Journal: broken layout: TODO make issue
 # cocoa: exampleSite isn't neutral (see the about page)
 noDemo=('hugo-incorporated', 'aglaus', 'journal', 'cocoa')
 
