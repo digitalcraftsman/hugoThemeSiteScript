@@ -98,15 +98,15 @@ fi
 
 # persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
 # html5: https://github.com/simonmika/hugo-theme-html5/issues/2
-blacklist=('persona', 'html5', '.git')
+# journal discontinued
+blacklist=('persona', 'html5', 'journal',  '.git')
 
 # hugo-incorporated: too complicated, needs its own
 #   exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
-# Journal: broken layout: TODO make issue
 # cocoa: exampleSite isn't neutral (see the about page)
 # github-project-landing-page: missing static folder
 #    https://github.com/oarrabi/github-project-landing-page/issues/1
-noDemo=('hugo-incorporated', 'journal', 'cocoa', 'github-project-landing-page')
+noDemo=('hugo-incorporated', 'cocoa', 'github-project-landing-page')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
   blacklisted=`echo ${blacklist[*]} | grep "$x"`
