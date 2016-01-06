@@ -101,13 +101,12 @@ fi
 blacklist=('persona', 'html5', '.git')
 
 # hugo-incorporated: too complicated, needs its own
-# exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
-# still using deprecated vars (0.14): 'aglaus'
+#   exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
 # Journal: broken layout: TODO make issue
 # cocoa: exampleSite isn't neutral (see the about page)
-# github-project-landing-page missing static folder
-# https://github.com/oarrabi/github-project-landing-page/issues/1
-noDemo=('hugo-incorporated', 'aglaus', 'journal', 'cocoa', 'github-project-landing-page')
+# github-project-landing-page: missing static folder
+#    https://github.com/oarrabi/github-project-landing-page/issues/1
+noDemo=('hugo-incorporated', 'journal', 'cocoa', 'github-project-landing-page')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
   blacklisted=`echo ${blacklist[*]} | grep "$x"`
