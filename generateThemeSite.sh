@@ -102,7 +102,9 @@ fi
 # persona: https://github.com/pcdummy/hugo-theme-persona/issues/1
 # html5: https://github.com/simonmika/hugo-theme-html5/issues/2
 # journal discontinued
-blacklist=('persona', 'html5', 'journal',  '.git')
+# aurora: https://github.com/coryshaw/hugo-aurora-theme/issues/1
+# hugo-plus: https://github.com/H4tch/hugo-plus/issues/5
+blacklist=('persona', 'html5', 'journal',  '.git', 'aurora', 'hugo-plus')
 
 # hugo-incorporated: too complicated, needs its own
 #   exampleSite: https://github.com/nilproductions/hugo-incorporated/issues/24
