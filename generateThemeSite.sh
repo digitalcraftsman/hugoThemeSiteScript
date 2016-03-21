@@ -74,6 +74,7 @@ if [ -d themes ]; then
   pushd themes
   git fetch origin
   git reset --hard origin/master
+  git submodule foreach git reset --hard
   git submodule update --init --recursive
   popd
 else
