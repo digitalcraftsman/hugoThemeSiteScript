@@ -114,7 +114,8 @@ blacklist=('persona', 'html5', 'journal',  '.git', 'aurora', 'hugo-plus')
 # github-project-landing-page: missing static folder
 #    https://github.com/oarrabi/github-project-landing-page/issues/1
 # future-imperfect: https://github.com/spf13/hugo/commit/02effd9dc46201df250564cdbbee1ca2291eb8b4
-noDemo=('hugo-incorporated', 'cocoa', 'github-project-landing-page', 'future-imperfect')
+# material-docs: https://github.com/spf13/hugoThemes/issues/114
+noDemo=('hugo-incorporated', 'cocoa', 'github-project-landing-page', 'future-imperfect', 'material-docs')
 
 for x in `ls -d exampleSite/themes/*/ | cut -d / -f3`; do
   blacklisted=`echo ${blacklist[*]} | grep "$x"`
