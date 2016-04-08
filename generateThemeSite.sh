@@ -76,6 +76,7 @@ if [ -d themes ]; then
   git reset --hard origin/master
   git submodule foreach git reset --hard
   git submodule update --init --recursive
+  git clean -d -f
   popd
 else
   git clone --recursive ${HUGO_THEMES_REPO} themes
